@@ -1,0 +1,20 @@
+{
+  "name": "aria-live-mfe",
+  "type": "module",
+  "description": "Sandbox for testing ARIA live regions within an app with a micro-frontend architecture",
+  "scripts": {
+    "start": "concurrently --kill-others 'npm run preview --workspace=app-a' 'npm run preview --workspace=app-b' 'npm run preview --workspace=root-app -- --open'",
+    "build": "npm run build -ws",
+    "clean": "rimraf node_modules **/node_modules && npm install"
+  },
+  "private": true,
+  "workspaces": [
+    "app-a",
+    "app-b",
+    "root-app"
+  ],
+  "devDependencies": {
+    "concurrently": "^8.2.1",
+    "rimraf": "^5.0.5"
+  }
+}
