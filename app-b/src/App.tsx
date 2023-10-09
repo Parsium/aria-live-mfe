@@ -1,9 +1,23 @@
 import React from "react";
 
-function App() {
-  const [message, setMessage] = React.useState<string | undefined>(undefined);
+const wait = async (ms: number) =>
+  new Promise<void>((resolve) => setTimeout(() => resolve(), ms));
 
-  const handleClick = () => setMessage("This is a message from app B.");
+function App() {
+  const [message, setMessage] = React.useState("Loading.");
+
+  const announce = async () => {
+    await wait(5000);
+    setMessage("This is app B.");
+    await wait(3000);
+    setMessage("App B still here.");
+    await wait(3000);
+    setMessage("Hello, are you there?");
+  };
+
+  React.useEffect(() => {
+    announce();
+  }, []);
 
   return (
     <>
@@ -11,9 +25,6 @@ function App() {
       <div aria-live="polite" role="status">
         {message}
       </div>
-      <button type="button" onClick={handleClick}>
-        Trigger me
-      </button>
     </>
   );
 }
